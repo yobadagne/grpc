@@ -28,7 +28,8 @@ func main() {
 	}
 
 	grpcserver := grpc.NewServer(
-		grpc.UnaryInterceptor(Interceptor),
+		grpc.UnaryInterceptor(UnaryInterceptor),
+		grpc.StreamInterceptor(ServerStreamIterceptor),
 	)
 	pb.RegisterGreetServiceServer(grpcserver, &helloServer{})
 	reflection.Register(grpcserver)
