@@ -9,10 +9,11 @@ import (
 
 	pb "github.com/yobadagne/grpc-yt/proto"
 	"google.golang.org/grpc"
+	// "google.golang.org/grpc/reflection"
 )
 
 const (
-	port = ":8080"
+	port = ":50051"
 )
 
 type helloServer struct {
@@ -28,6 +29,7 @@ func main() {
 
 	grpcserver := grpc.NewServer()
 	pb.RegisterGreetServiceServer(grpcserver, &helloServer{})
+	// reflection.Register(grpcserver)
 	go func() {
 		if err := grpcserver.Serve(lis); err != nil {
 			log.Fatalf("failed to start : %v", err)
