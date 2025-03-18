@@ -9,7 +9,7 @@ import (
 
 	pb "github.com/yobadagne/grpc-yt/proto"
 	"google.golang.org/grpc"
-	// "google.golang.org/grpc/reflection"
+	"google.golang.org/grpc/reflection"
 )
 
 const (
@@ -27,9 +27,11 @@ func main() {
 		log.Fatalf("failed to listen on %v error : %v", port, err)
 	}
 
-	grpcserver := grpc.NewServer()
+	grpcserver := grpc.NewServer(
+		grpc.UnaryInterceptor(Interceptor),
+	)
 	pb.RegisterGreetServiceServer(grpcserver, &helloServer{})
-	// reflection.Register(grpcserver)
+	reflection.Register(grpcserver)
 	go func() {
 		if err := grpcserver.Serve(lis); err != nil {
 			log.Fatalf("failed to start : %v", err)

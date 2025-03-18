@@ -1,11 +1,10 @@
-package main
+package test
 
 import (
 	"context"
 	"log"
 	"net"
 	"testing"
-
 	pb "github.com/yobadagne/grpc-yt/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
