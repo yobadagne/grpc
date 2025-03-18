@@ -13,7 +13,10 @@ const (
 )
 
 func main() {
-	conn, err := grpc.NewClient("localhost"+port, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient("localhost"+port, grpc.WithTransportCredentials(insecure.NewCredentials()), 
+	grpc.WithUnaryInterceptor(UnaryClientInterceptor),
+	grpc.WithStreamInterceptor(StreamClientInterceptor),
+)
 	if err != nil {
 		log.Fatalf("failed to dial grpc: %v", err)
 	}
